@@ -124,10 +124,7 @@ kable(
   ), 
   align='ccllccccc', caption=tbl1.cap
 )
-
-?rmarkdown::render
 ```
-
 
 ```{r tbl2, echo=F}
 tbl2.cap <- 'Subsample size by diagnostic subcategory (DMII, MDD, or both).'
@@ -140,6 +137,6 @@ kable(
     nrow(pos$mdd), 
     row.names = c('Size (N)')
   ),
-  col.names = tbl2.col, caption=tbl2.cap
+  align='c', col.names=tbl2.col, caption=tbl2.cap
 )
 ```

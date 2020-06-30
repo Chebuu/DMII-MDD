@@ -51,4 +51,5 @@ GROUP BY
 	dd.dd_icd9,
     dm.dmii,
 	dd.mdd
+
 ; -- LANGUAGE plpgsql;
