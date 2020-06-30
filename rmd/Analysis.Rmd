@@ -23,7 +23,6 @@ knit: (function(input,encoding) {
           output_format='pdf_document')})
 ---
 
-
 ```{r setup, include=F, echo=F}
 library(knitr)
 knitr::knit

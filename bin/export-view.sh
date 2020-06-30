@@ -11,9 +11,6 @@ if [ "${1}" != "--source-only" ]; then
     abspath "${@}"
 fi
 
-VIEW=$1
-FOUT=$(abspath $2)
-
 PGPORT=${PGPORT:-"5432"}
 PGHOST=${PGHOST:-"127.0.0.1"}
 PGDATABASE=${PGDATABASE:-"mimic"}
