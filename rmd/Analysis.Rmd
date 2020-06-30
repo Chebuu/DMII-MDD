@@ -1,0 +1,145 @@
+---
+title: "Untitled"
+author: "Alice Anonymous"
+date: "6/30/2020"
+output:
+  pdf_document:
+    df_print: kable
+  md_document:
+    variant: markdown_github
+    df_print: kable
+knit: (function(input,encoding) {
+        rmarkdown::render(
+          input=input, 
+          encoding=encoding, 
+          output_dir="../",
+          output_file='README.md',
+          output_format='md_document');
+        rmarkdown::render(
+          input=input, 
+          encoding=encoding,
+          output_dir='../',
+          output_file='Analysis.pdf', 
+          output_format='pdf_document')})
+---
+
+
+```{r setup, include=F, echo=F}
+library(knitr)
+knitr::knit
+```
+
+# Abstract
+
+
+A patient was considered positive for DMII or MDD if any of the following ICD-9 codes were recorded for that patient across all hospital admissions.
+
+**_ICD-9 CM codes defining DMII_**
+
+Non-specific code [250](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/default.htm) Diabetes mellitus
+
+- [250.00](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.00.htm) DM type II or unspecified type w/o complication, not stated as uncontrolled)
+- [250.02](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.02.htm) DM type II or unspecified type w/o complication, uncontrolled)
+- [250.10](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.10.htm) DM type II or unspecified type w/ ketoacidosis, not stated as uncontrolled)
+- [250.12](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.12.htm) DM type II or unspecified type w/ ketoacidosis, uncontrolled)
+- [250.20](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.20.htm) DM type II or unspecified type w/ hyperosmolarity, not stated as uncontrolled)
+- [250.22](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.22.htm) DM type II or unspecified type w/ hyperosmolarity, uncontrolled)
+- [250.30](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.30.htm) DM type II or unspecified type w/ other coma, not stated as uncontrolled)
+- [250.32](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.32.htm) DM type II or unspecified type w/ other coma, uncontrolled)
+- [250.40](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.40.htm) DM type II or unspecified type w/ renal manifestations, not stated as uncontrolled)
+- [250.42](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.42.htm) DM type II or unspecified type w/ renal manifestations, uncontrolled)
+- [250.50](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.50.htm) DM type II or unspecified type w/ ophthalmic manifestations, not stated as uncontrolled)
+- [250.52](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.52.htm) DM type II or unspecified type w/ ophthalmic manifestations, uncontrolled)
+- [250.60](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.60.htm) DM type II or unspecified type w/ neurological manifestations, not stated as uncontrolled)
+- [250.62](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.62.htm) DM type II or unspecified type w/ neurological manifestations, uncontrolled)
+- [250.70](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.70.htm) DM type II or unspecified type w/ peripheral circulatory disorders, not stated as uncontrolled)
+- [250.72](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.72.htm) DM type II or unspecified type w/ peripheral circulatory disorders, uncontrolled)
+- [250.80](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.80.htm) DM type II or unspecified type w/ other specified manifestations, not stated as uncontrolled)
+- [250.82](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.82.htm) DM type II or unspecified type w/ other specified manifestations, uncontrolled)
+- [250.90](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.90.htm) DM type II or unspecified type w/ unspecified complication, not stated as uncontrolled)
+- [250.92](http://www.icd9data.com/2014/Volume1/240-279/249-259/250/250.92.htm) DM type II or unspecified type w/ unspecified complication, uncontrolled)
+
+**_ICD-9 CM codes defining MDD_**
+
+Non-specific code [296](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/default.htm) Episodic mood disorders
+
+  - [296.20](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.20.htm) Major depressive affective disorder, single episode, unspecified
+  - [296.21](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.21.htm) Major depressive affective disorder, single episode, mild
+  - [296.22](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.22.htm) Major depressive affective disorder, single episode, moderate
+  - [296.23](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.23.htm) Major depressive affective disorder, single episode, severe
+  - [296.24](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.24.htm) Major depressive affective disorder, single episode, severe
+  - [296.25](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.25.htm) Major depressive affective disorder, single episode, in partial or unspecified remission
+  - [296.26](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.26.htm) Major depressive affective disorder, single episode, in full remission      
+
+Non-specific code [296.3](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.3.htm) Major depressive disorder recurrent episode
+
+  - [296.30](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.30.htm) Major depressive affective disorder, recurrent episode, unspecified
+  - [296.31](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.31.htm) Major depressive affective disorder, recurrent episode, mild
+  - [296.32](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.32.htm) Major depressive affective disorder, recurrent episode, moderate
+  - [296.33](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.33.htm) Major depressive affective disorder, recurrent episode, severe, w/o mention of psychotic behavior
+  - [296.34](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.34.htm) Major depressive affective disorder, recurrent episode, severe, specified as with psychotic behavior
+  - [296.35](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.35.htm) Major depressive affective disorder, recurrent episode, in partial or unspecified remission
+  - [296.36](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.36.htm) Major depressive affective disorder, recurrent episode, in full remission
+
+# Load the dataset
+
+The [data/study-population.csv](data/study-population.csv) file contains the results of a [query](sql/study-population.sql) on the MIMIC-III database that extracts patient information along with a one-hot encoding of ICD-9 CM diagnoses for Diabetes Mellitus Type II (DMII) and Major Depressive Disorder (MDD). 
+
+```{r data, echo=T, message=F, warning=F}
+library(tidyr)
+library(dplyr)
+
+set.seed(123)
+
+POP_CSV <- '../data/study-population.csv'
+
+pop <- population <- read.csv(POP_CSV) %>%
+  replace_na(list(dmii= 0, mdd = 0)) %>%
+  mutate_all(na_if, '')
+
+pos <- positive <- list(
+  mdd = filter(pop, dmii == 0, mdd == 1), 
+  dmii = filter(pop, dmii == 1, mdd == 0), 
+  both = filter(pop, dmii == 1, mdd == 1) 
+)
+
+neg <- negative <- lapply(pos, function(sub) {
+  pop %>% 
+    filter(dmii == 0, mdd == 0) %>%
+    sample_n(size=nrow(sub))
+}) %>% setNames(names(pos))
+```
+
+```{r tbl1_tbl2, echo=F}
+tbl1.cap <- sprintf('A sample of the study population (N = %s).', nrow(pop))
+
+kable(
+  data.frame(
+    rbind(
+      pos$mdd[1:2,],
+      pos$mmii[1:2,],
+      pos$both[1:2,],
+      neg$both[1:2,]
+    )
+  ), 
+  align='ccllccccc', caption=tbl1.cap
+)
+
+?rmarkdown::render
+```
+
+
+```{r tbl2, echo=F}
+tbl2.cap <- 'Subsample size by diagnostic subcategory (DMII, MDD, or both).'
+tbl2.col <- c('DMII(+)/MDD(+)', 'DMII(+)/MDD(-)', 'DMII(-)/MDD(+)')
+
+kable(
+  data.frame(
+    nrow(pos$both), 
+    nrow(pos$dmii), 
+    nrow(pos$mdd), 
+    row.names = c('Size (N)')
+  ),
+  col.names = tbl2.col, caption=tbl2.cap
+)
+```
