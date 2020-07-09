@@ -49,6 +49,7 @@ WITH ht AS (
         226531	"Admission Weight (lbs.)"	"metavision"	"chartevents"
 )
 
+; -- LANGUAGE plpgsql;
 
 -- -- D_ITEMS
 -- 762	"Admit Wt"	"carevue"	"chartevents"
@@ -76,3 +77,4 @@ WITH ht AS (
 -- -- -- 226740 | | "metavision" | | "APACHE II Diagnosistic weight factors - Medical"              
 -- -- -- 226741 | | "metavision" | | "APACHE II Diagnosistic weight factors - Surgical emergency"   
 -- -- -- 226742 | | "metavision" | | "APACHE II Diagnosistic weight factors - Surgical"
+
