@@ -2,7 +2,7 @@
 Load the dataset in R
 =====================
 
-The [data/study-population.csv](data/study-population.csv) file contains
+The [data/study_population.csv](data/study-population.csv) file contains
 the results of a [query](sql/study-population.sql) on the MIMIC-III
 database that extracts patient information along with a one-hot encoding
 of ICD-9 CM diagnoses for Diabetes Mellitus Type II (DMII) and Major
