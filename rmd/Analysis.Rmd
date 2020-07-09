@@ -90,10 +90,10 @@ library(dplyr)
 
 set.seed(123)
 
-POP_CSV <- '../data/study-population.csv'
+POP_CSV <- '../data-raw/study_population.csv'
 
 pop <- population <- read.csv(POP_CSV) %>%
-  replace_na(list(dmii= 0, mdd = 0)) %>%
+  replace_na(list(dmii = 0, mdd = 0)) %>%
   mutate_all(na_if, '')
 
 pos <- positive <- list(
@@ -136,6 +136,44 @@ kable(
     nrow(pos$mdd), 
     row.names = c('Size (N)')
   ),
-  align='c', col.names=tbl2.col, caption=tbl2.cap
+  align = 'c', col.names = tbl2.col, caption = tbl2.cap
 )
+```
+
+# Chi-squared test
+```{r xsq, echo=T, message=F, warning=F}
+
+(ctab <- data.frame(
+  dmii = c(
+    sum(pos$dmii$gender == 'M'),
+    sum(pos$dmii$gender == 'F')
+  ),
+  mdd = c(
+    sum(pos$mdd$gender == 'M'),
+    sum(pos$mdd$gender == 'F')
+  ),
+  both = c(
+    sum(pos$both$gender == 'M'),
+    sum(pos$both$gender == 'F')
+  ),
+  row.names = c('M', 'F')
+))
+
+chisq.test(
+  ctab
+)
+
+install.packages('gplots')
+library("gplots")
+# 1. convert the data as a table
+dt <- as.table(as.matrix(ctab))
+# 2. Graph
+balloonplot(t(dt), main ="housetasks", xlab ="", ylab="",
+            label = FALSE, show.margins = FALSE)
+
+install.packages('graphics')
+
+mosaicplot(dt, shade = TRUE, las=5,
+           type='deviance')
+
 ```

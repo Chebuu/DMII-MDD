@@ -4,6 +4,6 @@ PGHOST=${PGHOST:-"127.0.0.1"}
 PGDATABASE=${PGDATABASE:-"mimic"}
 PGOPTIONS=${PGOPTIONS:-"--search_path=mimiciii"}
 
-eval "PGOPTIONS=$PGOPTIONS" psql -d $PGDATABASE -p $PGPORT -h $PGHOST -f $1
+eval "PGOPTIONS=$PGOPTIONS" psql -f $1 -d $PGDATABASE -p $PGPORT -h $PGHOST
 
   

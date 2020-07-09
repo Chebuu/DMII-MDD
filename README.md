@@ -1,3 +1,52 @@
+
+Load the dataset in R
+=====================
+
+The [data/study-population.csv](data/study-population.csv) file contains
+the results of a [query](sql/study-population.sql) on the MIMIC-III
+database that extracts patient information along with a one-hot encoding
+of ICD-9 CM diagnoses for Diabetes Mellitus Type II (DMII) and Major
+Depressive Disorder (MDD).
+
+``` r
+library(tidyr)
+library(dplyr)
+
+set.seed(123)
+
+POP_CSV <- 'data-raw/study-population.csv'
+
+pop <- population <- read.csv(POP_CSV) %>%
+  replace_na(list(dmii= 0, mdd = 0)) %>%
+  mutate_all(na_if, '')
+
+pos <- positive <- list(
+  mdd = filter(pop, dmii == 0, mdd == 1), 
+  dmii = filter(pop, dmii == 1, mdd == 0), 
+  both = filter(pop, dmii == 1, mdd == 1) 
+)
+
+neg <- negative <- lapply(pos, function(sub) {
+  pop %>% 
+    filter(dmii == 0, mdd == 0) %>%
+    sample_n(size=nrow(sub))
+}) %>% setNames(names(pos))
+```
+
+| subject\_id | gender | dob                 | dod                 | expire\_flag | dm\_icd9 | dmii | dd\_icd9 | mdd |
+|:-----------:|:------:|:--------------------|:--------------------|:------------:|:--------:|:----:|:--------:|:---:|
+|      18     |    M   | 2116-11-29 00:00:00 | NA                  |       0      |    NA    |   0  |   29633  |  1  |
+|      22     |    F   | 2131-05-07 00:00:00 | NA                  |       0      |    NA    |   0  |   29620  |  1  |
+|     1899    |    F   | 2062-01-20 00:00:00 | 2118-09-06 00:00:00 |       1      |   25061  |   1  |   29620  |  1  |
+|     2984    |    F   | 2127-09-02 00:00:00 | NA                  |       0      |   25061  |   1  |   29620  |  1  |
+|     6816    |    M   | 2120-09-11 00:00:00 | NA                  |       0      |    NA    |   0  |    NA    |  0  |
+|    13766    |    M   | 2111-05-24 00:00:00 | NA                  |       0      |    NA    |   0  |    NA    |  0  |
+
+|          | DMII(+)/MDD(+) | DMII(+)/MDD(-) | DMII(-)/MDD(+) |
+|----------|:--------------:|:--------------:|:--------------:|
+| Size (N) |       19       |       979      |       264      |
+
+
 Abstract
 ========
 
@@ -113,50 +162,3 @@ Major depressive disorder recurrent episode
 -   [296.36](http://www.icd9data.com/2014/Volume1/290-319/295-299/296/296.36.htm)
     Major depressive affective disorder, recurrent episode, in full
     remission
-
-Load the dataset
-================
-
-The [data/study-population.csv](data/study-population.csv) file contains
-the results of a [query](sql/study-population.sql) on the MIMIC-III
-database that extracts patient information along with a one-hot encoding
-of ICD-9 CM diagnoses for Diabetes Mellitus Type II (DMII) and Major
-Depressive Disorder (MDD).
-
-``` r
-library(tidyr)
-library(dplyr)
-
-set.seed(123)
-
-POP_CSV <- '../data/study-population.csv'
-
-pop <- population <- read.csv(POP_CSV) %>%
-  replace_na(list(dmii= 0, mdd = 0)) %>%
-  mutate_all(na_if, '')
-
-pos <- positive <- list(
-  mdd = filter(pop, dmii == 0, mdd == 1), 
-  dmii = filter(pop, dmii == 1, mdd == 0), 
-  both = filter(pop, dmii == 1, mdd == 1) 
-)
-
-neg <- negative <- lapply(pos, function(sub) {
-  pop %>% 
-    filter(dmii == 0, mdd == 0) %>%
-    sample_n(size=nrow(sub))
-}) %>% setNames(names(pos))
-```
-
-| subject\_id | gender | dob                 | dod                 | expire\_flag | dm\_icd9 | dmii | dd\_icd9 | mdd |
-|:-----------:|:------:|:--------------------|:--------------------|:------------:|:--------:|:----:|:--------:|:---:|
-|      18     |    M   | 2116-11-29 00:00:00 | NA                  |       0      |    NA    |   0  |   29633  |  1  |
-|      22     |    F   | 2131-05-07 00:00:00 | NA                  |       0      |    NA    |   0  |   29620  |  1  |
-|     1899    |    F   | 2062-01-20 00:00:00 | 2118-09-06 00:00:00 |       1      |   25061  |   1  |   29620  |  1  |
-|     2984    |    F   | 2127-09-02 00:00:00 | NA                  |       0      |   25061  |   1  |   29620  |  1  |
-|     6816    |    M   | 2120-09-11 00:00:00 | NA                  |       0      |    NA    |   0  |    NA    |  0  |
-|    13766    |    M   | 2111-05-24 00:00:00 | NA                  |       0      |    NA    |   0  |    NA    |  0  |
-
-|          | DMII(+)/MDD(+) | DMII(+)/MDD(-) | DMII(-)/MDD(+) |
-|----------|:--------------:|:--------------:|:--------------:|
-| Size (N) |       19       |       979      |       264      |
