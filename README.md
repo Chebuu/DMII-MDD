@@ -2,8 +2,8 @@
 Load the dataset in R
 =====================
 
-The [data/study_population.csv](data/study-population.csv) file contains
-the results of a [query](sql/study-population.sql) on the MIMIC-III
+The [data/study_population.csv](data/study_population.csv) file contains
+the results of a [query](sql/study_population.sql) on the MIMIC-III
 database that extracts patient information along with a one-hot encoding
 of ICD-9 CM diagnoses for Diabetes Mellitus Type II (DMII) and Major
 Depressive Disorder (MDD).
@@ -14,7 +14,7 @@ library(dplyr)
 
 set.seed(123)
 
-POP_CSV <- 'data-raw/study-population.csv'
+POP_CSV <- 'data-raw/study_population.csv'
 
 pop <- population <- read.csv(POP_CSV) %>%
   replace_na(list(dmii= 0, mdd = 0)) %>%
