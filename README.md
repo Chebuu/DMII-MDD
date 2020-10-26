@@ -47,7 +47,7 @@ neg <- negative <- lapply(pos, function(sub) {
 | Size (N) |       19       |       979      |       264      |
 
 
-Abstract
+Criteria
 ========
 
 A patient was considered positive for DMII or MDD if any of the
